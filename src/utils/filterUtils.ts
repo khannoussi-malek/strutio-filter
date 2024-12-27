@@ -53,14 +53,14 @@ function buildValueComparison(
 
 export function serializeFilter(filter: FilterGroup): string {
   const json = JSON.stringify(filter);
-  const buffer = new TextEncoder().encode(json); // Convert JSON to Uint8Array
-  return encode(buffer); // Encode to base64
+  const buffer = new TextEncoder().encode(json);
+  return encode(buffer);
 }
 
 export function deserializeFilter(filterStr: string): FilterGroup {
-  const buffer = decode(filterStr); // Decode base64 to Uint8Array
-  const json = new TextDecoder().decode(buffer); // Convert Uint8Array to JSON
-  return JSON.parse(json); // Parse JSON to object
+  const buffer = decode(filterStr);
+  const json = new TextDecoder().decode(buffer);
+  return JSON.parse(json);
 }
 
 export function getObject(
