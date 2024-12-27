@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Build {
+  id          String           @id @default(uuid())
+  name        String
+  description String           @default("")
+  timestamp   DateTime         @default(now())
+  attributes  AttributeBuild[]
+}
+
+model Attribute {
+  id         String           @id @default(uuid())
+  name       String           @unique
+  type       String
+  attributes AttributeBuild[]
+}
+
+model AttributeBuild {
+  buildId     String
+  attributeId String
+  value       String
+  build       Build     @relation(fields: [buildId], references: [id])
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+
+  @@id([buildId, attributeId])
+}
+
+model Filter {
+  id         String   @id @default(uuid())
+  name       String
+  conditions String
+  createdAt  DateTime @default(now())
+}
